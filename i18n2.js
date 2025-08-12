@@ -499,7 +499,7 @@ const translations = {
         "member_anil_kumar_name": "అనిల్ కుమార్",
         "member_anil_kumar_role": "లయ నిపుణుడు"
     },
-    "ml": {
+    "my": {
         "title": "നമ്മയാ ബലഗ - സാംസ്കാരിക ബന്ധം",
         "home": "ഹോം",
         "about": "ഞങ്ങളെക്കുറിച്ച്",
