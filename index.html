@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nammaya Balaga - Cultural Connect</title>
+    <title data-i18n="title">Nammaya Balaga - Cultural Connect</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +15,6 @@
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
         }
-
         /* Define CSS Variables for Themes */
         :root {
             --primary-color: #4f46e5;
@@ -25,47 +25,15 @@
             --card-bg-color: #ffffff;
             --shadow-color: rgba(0, 0, 0, 0.1);
         }
-
-        .theme-sunset {
-            --primary-color: #f97316;
-            --secondary-color: #fb923c;
-            --bg-color: #fffbeb;
-            --text-color: #4a2f00;
-            --text-light-color: #78350f;
-            --card-bg-color: #fef3c7;
-            --shadow-color: rgba(251, 146, 60, 0.2);
+        .theme-dark {
+            --primary-color: #818cf8;
+            --secondary-color: #6366f1;
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --text-light-color: #d1d5db;
+            --card-bg-color: #1f2937;
+            --shadow-color: rgba(255, 255, 255, 0.1);
         }
-
-        .theme-forest {
-            --primary-color: #16a34a;
-            --secondary-color: #22c55e;
-            --bg-color: #f0fdf4;
-            --text-color: #0c4a1b;
-            --text-light-color: #15803d;
-            --card-bg-color: #dcfce7;
-            --shadow-color: rgba(34, 197, 94, 0.2);
-        }
-
-        .theme-monochrome {
-            --primary-color: #1f2937;
-            --secondary-color: #4b5563;
-            --bg-color: #f3f4f6;
-            --text-color: #111827;
-            --text-light-color: #6b7280;
-            --card-bg-color: #ffffff;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-        }
-
-        .theme-ocean {
-            --primary-color: #0ea5e9;
-            --secondary-color: #38bdf8;
-            --bg-color: #f0f9ff;
-            --text-color: #075985;
-            --text-light-color: #0284c7;
-            --card-bg-color: #e0f2fe;
-            --shadow-color: rgba(14, 165, 233, 0.2);
-        }
-
         /* Apply theme variables to Tailwind classes */
         .bg-primary { background-color: var(--primary-color); }
         .text-primary { color: var(--primary-color); }
@@ -77,453 +45,222 @@
         .text-light { color: var(--text-light-color); }
         .bg-card { background-color: var(--card-bg-color); }
         .shadow-theme { box-shadow: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -1px var(--shadow-color); }
-
         .sponsor-card:hover .sponsor-info {
             opacity: 1;
             transform: translateY(0);
         }
     </style>
 </head>
-<body class="bg-body text-body">
+<body class="bg-[var(--bg-color)] text-[var(--text-color)] transition-colors duration-300">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[var(--card-bg-color)] shadow-md">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-[var(--primary-color)]">Nammaya Balaga</a>
+            <div class="hidden lg:flex items-center space-x-6" id="nav-menu">
+                <a href="#hero" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="home">Home</a>
 
-    <header class="fixed top-0 left-0 right-0 z-50 bg-card shadow-md">
-        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-          <!--  <a href="index.html" class="text-2xl font-bold text-primary">Nammaya Balaga</a> -->
-            <a href="index.html" class="flex items-center space-x-2 theme-option">
-                <img src="https://placehold.co/40x40/4f46e5/ffffff?text=NB" alt="Nammaya Balaga Logo" class="rounded-full ">
-                <span class="text-xl font-bold text-primary">ನಮ್ಮಯ ಬಳಗ</span>
-            </a>
-            <button id="menu-button" class="lg:hidden p-2 text-light focus:outline-none">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-
-            <div id="nav-menu" class="hidden lg:flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-8">
-                <a href="index.html" class="text-light hover-text-primary transition duration-300 font-medium">Home</a>
-                <a href="#features" class="text-light hover-text-primary transition duration-300 font-medium">Features</a>
-                <a href="#news" class="text-light hover-text-primary transition duration-300 font-medium">News</a>
-                <a href="#upcoming-events" class="text-light hover-text-primary transition duration-300 font-medium">Events</a>
-                <a href="#members" class="text-light hover-text-primary transition duration-300 font-medium">Members</a>
-                
-                <div class="relative group">
-                    <button id="programs-dropdown-btn" class="text-light hover-text-primary transition duration-300 font-medium flex items-center">
-                        Programs <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                <div class="relative">
+                    <button id="programsDropdownBtn" class="flex items-center text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium">
+                        <span data-i18n="programs">Programs</span>
+                        <i class="fas fa-chevron-down ml-2"></i>
                     </button>
-                    <div id="programs-dropdown-menu" class="lg:absolute hidden group-hover:block bg-card shadow-lg rounded-md mt-2 w-48 py-2">
-                        <a href="yakshagaana.html" class="block px-4 py-2 text-body hover:bg-gray-100">Yakshagaana</a>
-                        <a href="bhajane.html" class="block px-4 py-2 text-body hover:bg-gray-100">Bhajane</a>
-                        <a href="chende.html" class="block px-4 py-2 text-body hover:bg-gray-100">Chende</a>
+                    <div id="programsDropdownMenu" class="absolute hidden bg-[var(--card-bg-color)] shadow-lg rounded-md mt-2 w-48 py-2 z-10 transition-all duration-300">
+                        <a href="yakshagaana.html" class="block px-4 py-2 text-[var(--text-color)] hover:bg-gray-100 theme-dark:hover:bg-gray-600" data-i18n="programs_yakshagaana">Yakshagaana</a>
+                        <a href="bhajane.html" class="block px-4 py-2 text-[var(--text-color)] hover:bg-gray-100 theme-dark:hover:bg-gray-600" data-i18n="programs_bhajane">Bhajane</a>
+                        <a href="chende.html" class="block px-4 py-2 text-[var(--text-color)] hover:bg-gray-100 theme-dark:hover:bg-gray-600" data-i18n="programs_chende">Chende</a>
                     </div>
                 </div>
-
-                <a href="#sponsors" class="text-light hover-text-primary transition duration-300 font-medium">Sponsors</a>
-                <a href="#contact-us" class="text-light hover-text-primary transition duration-300 font-medium">Contact</a>
-                <a href="#about-us" class="text-light hover-text-primary transition duration-300 font-medium">About</a>
-
-
-<div class="relative group">
-    <button id="theme-switcher-btn" class="text-light hover-text-primary transition duration-300 font-medium flex items-center">
-        <i class="fas fa-sun text-xl text-primary"></i>
-    </button>
-    <div id="theme-switcher-menu" class="lg:absolute hidden bg-card shadow-lg rounded-md mt-2 w-48 py-2 right-0">
-        <button class="block w-full text-left px-4 py-2 text-body hover:bg-gray-100 theme-option" data-theme="default">Default</button>
-        <button class="block w-full text-left px-4 py-2 text-body hover:bg-gray-100 theme-option" data-theme="sunset">Sunset</button>
-        <button class="block w-full text-left px-4 py-2 text-body hover:bg-gray-100 theme-option" data-theme="forest">Forest</button>
-        <button class="block w-full text-left px-4 py-2 text-body hover:bg-gray-100 theme-option" data-theme="monochrome">Monochrome</button>
-        <button class="block w-full text-left px-4 py-2 text-body hover:bg-gray-100 theme-option" data-theme="ocean">Ocean</button>
-    </div>
-</div>
+                <a href="#events" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="events">Events</a>
+                <a href="#gallery" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="gallery">Gallery</a>
+                <a href="#testimonials" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="testimonials">Testimonials</a>
+                <a href="#donations" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="donations">Donations</a>
+				<a href="#about" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="about">About</a>
+                <a href="#contact" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="contact">Contact</a>
+                <button id="theme-toggle" class="p-2 rounded-full text-[var(--text-color)] hover:bg-gray-100 transition-colors duration-300">
+                    <i class="fas fa-sun block theme-dark:hidden"></i>
+                    <i class="fas fa-moon hidden theme-dark:block"></i>
+                </button>
+                <select id="lang-selector" class="border border-gray-300 rounded-md px-2 py-1 text-sm bg-[var(--card-bg-color)] text-[var(--text-color)]">
+                    <option value="en">English</option>
+                    <option value="kn">ಕನ್ನಡ</option>
+                </select>
+            </div>
+            <div class="lg:hidden flex items-center space-x-4">
+                <button id="theme-toggle-mobile" class="p-2 rounded-full text-[var(--text-color)] hover:bg-gray-100 transition-colors duration-300">
+                    <i class="fas fa-sun block theme-dark:hidden"></i>
+                    <i class="fas fa-moon hidden theme-dark:block"></i>
+                </button>
+                <select id="lang-selector-mobile" class="border border-gray-300 rounded-md px-2 py-1 text-sm bg-[var(--card-bg-color)] text-[var(--text-color)]">
+                    <option value="en">EN</option>
+                    <option value="kn">KN</option>
+                </select>
+                <button id="nav-toggle" class="text-2xl text-[var(--text-color)]">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </nav>
+        <div id="mobile-menu" class="hidden lg:hidden flex-col items-center space-y-4 py-4 bg-[var(--card-bg-color)] shadow-md">
+            <a href="#hero" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="home">Home</a>
+            <a href="#about" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="about">About</a>
+            <div class="relative w-full text-center">
+                <button id="mobileProgramsDropdownBtn" class="flex items-center justify-center w-full text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium">
+                    <span data-i18n="programs">Programs</span>
+                    <i class="fas fa-chevron-down ml-2"></i>
+                </button>
+                <div id="mobileProgramsDropdownMenu" class="hidden bg-[var(--card-bg-color)] shadow-lg rounded-md mt-2 py-2 z-10 w-full transition-all duration-300">
+                    <a href="yakshagaana.html" class="block px-4 py-2 text-[var(--text-color)] hover:bg-gray-100 theme-dark:hover:bg-gray-600" data-i18n="programs_yakshagaana">Yakshagaana</a>
+                    <a href="bhajane.html" class="block px-4 py-2 text-[var(--text-color)] hover:bg-gray-100 theme-dark:hover:bg-gray-600" data-i18n="programs_bhajane">Bhajane</a>
+                    <a href="chende.html" class="block px-4 py-2 text-[var(--text-color)] hover:bg-gray-100 theme-dark:hover:bg-gray-600" data-i18n="programs_chende">Chende</a>
+                </div>
+            </div>
+            <a href="#events" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="events">Events</a>
+            <a href="#gallery" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="gallery">Gallery</a>
+            <a href="#testimonials" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="testimonials">Testimonials</a>
+            <a href="#donations" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="donations">Donations</a>
+            <a href="#contact" class="text-[var(--text-color)] hover:text-[var(--primary-color)] transition duration-300 font-medium" data-i18n="contact">Contact</a>
+        </div>
     </header>
-
-    <main class="pt-16">
-        <section id="home" class="relative bg-primary text-white flex items-center justify-center h-[calc(100vh-4rem)] overflow-hidden">
-            <div class="absolute inset-0 z-0 opacity-20" style="background-image: url('https://placehold.co/1920x1080/6c5ce7/ffffff?text=CULTURAL+CONNECT'); background-size: cover; background-position: center;"></div>
-            
-            <div class="relative z-10 text-center px-6 md:px-12 max-w-4xl">
-                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight mb-2">
-                    Nammaya Balaga
-                </h1>
-                <p class="text-lg md:text-xl font-light mb-8">
-                    Cultural Connect
-                </p>
-                <a href="#upcoming-events" class="inline-block bg-card text-primary font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition duration-300 transform hover:scale-105">
-                    Explore Our Events
-                </a>
+    <main class="pt-20">
+        <section id="hero" class="relative bg-cover bg-center h-screen flex items-center justify-center text-center" style="background-image: url('https://placehold.co/1920x1080/4f46e5/ffffff?text=Nammaya+Balaga');">
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <div class="relative z-10 text-white px-6">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4" data-i18n="hero_heading">Welcome to Nammaya Balaga</h1>
+                <p class="text-lg md:text-xl mb-8" data-i18n="hero_subheading">Connecting hearts, preserving culture.</p>
+                <a href="#about" class="bg-white text-[var(--primary-color)] px-8 py-3 rounded-full font-bold hover:bg-gray-200 transition duration-300" data-i18n="hero_button">Explore our rich heritage.</a>
             </div>
         </section>
 
-        <section id="features" class="py-20">
+        <section id="about" class="py-16 bg-[var(--bg-color)]">
             <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center mb-12 text-primary">Our Core Features</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <div class="bg-card rounded-xl shadow-theme p-8 flex flex-col items-center">
-                        <i class="fas fa-users text-4xl text-primary mb-4"></i>
-                        <h3 class="text-xl font-bold text-body mb-2">Community Building</h3>
-                        <p class="text-light">
-                            We foster a strong and welcoming community for artists and cultural enthusiasts.
-                        </p>
-                    </div>
-                    <div class="bg-card rounded-xl shadow-theme p-8 flex flex-col items-center">
-                        <i class="fas fa-theater-masks text-4xl text-primary mb-4"></i>
-                        <h3 class="text-xl font-bold text-body mb-2">Artistic Excellence</h3>
-                        <p class="text-light">
-                            Showcasing high-quality performances in Yakshagaana, Bhajane, and Chende.
-                        </p>
-                    </div>
-                    <div class="bg-card rounded-xl shadow-theme p-8 flex flex-col items-center">
-                        <i class="fas fa-handshake text-4xl text-primary mb-4"></i>
-                        <h3 class="text-xl font-bold text-body mb-2">Partnerships</h3>
-                        <p class="text-light">
-                            Collaborating with local businesses and sponsors to support our cultural initiatives.
-                        </p>
-                    </div>
-                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4" data-i18n="about_heading">About Us</h2>
+                <p class="text-center text-[var(--text-light-color)] max-w-3xl mx-auto mb-12" data-i18n="about_text">Nammaya Balaga is a community dedicated to celebrating and preserving the rich cultural heritage of our region. Through various programs and events, we aim to connect people with their roots and foster a sense of belonging. Our mission is to promote traditional art forms, music, and values for future generations.</p>
             </div>
         </section>
 
-        <section id="about-us" class="py-20 bg-body">
-            <div class="container mx-auto px-6 max-w-5xl">
-                <h2 class="text-4xl font-bold text-center mb-12 text-primary">About Nammaya Balaga</h2>
-                <div class="flex flex-col md:flex-row items-center gap-12">
-                    <div class="md:w-1/2">
-                        <img src="https://placehold.co/600x400/9b59b6/ffffff?text=Nammaya+Balaga" alt="Nammaya Balaga" class="rounded-xl shadow-lg">
-                    </div>
-                    <div class="md:w-1/2">
-                        <h3 class="text-2xl font-bold text-body mb-4">Our Mission</h3>
-                        <p class="text-light mb-6">
-                            Nammaya Balaga, which translates to "Our Group," is a cultural organization dedicated to preserving, promoting, and celebrating the rich folk traditions of our heritage. We aim to connect people of all ages and backgrounds through the vibrant arts of Yakshagaana, Bhajane, and Chende.
-                        </p>
-                        <h3 class="text-2xl font-bold text-body mb-4">Our Vision</h3>
-                        <p class="text-light">
-                            To be a leading cultural hub that inspires the next generation of artists and keeps our traditions alive through community engagement, performances, and educational workshops.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="news" class="py-20">
+        <section id="programs" class="py-16 bg-[var(--card-bg-color)]">
             <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center mb-12 text-primary">Latest News</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-card rounded-xl shadow-theme hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
-                        <img src="https://placehold.co/600x400/9b59b6/ffffff?text=Community+Gathering" alt="Community Gathering" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-body mb-2">Annual Community Gathering</h3>
-                            <p class="text-light text-sm mb-4">
-                                Our annual community gathering was a huge success, bringing together members and families for a day of cultural celebration and delicious food.
-                            </p>
-                            <div class="flex items-center text-sm text-light mb-4">
-                                <i class="fas fa-calendar-alt mr-2 text-primary"></i>
-                                <span>September 20, 2025</span>
-                            </div>
-                            <a href="#" class="inline-block bg-primary text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-secondary transition-colors">
-                                View Details
-                            </a>
-                        </div>
-                    </div>
-                     <div class="bg-card rounded-xl shadow-theme hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
-                        <img src="https://placehold.co/600x400/3498db/ffffff?text=New+Members" alt="New Members" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-body mb-2">Welcoming New Members</h3>
-                            <p class="text-light text-sm mb-4">
-                                We are thrilled to welcome new members to our team, expanding our community and artistic reach. Join us in greeting them!
-                            </p>
-                            <div class="flex items-center text-sm text-light mb-4">
-                                <i class="fas fa-calendar-alt mr-2 text-primary"></i>
-                                <span>August 15, 2025</span>
-                            </div>
-                            <a href="#" class="inline-block bg-primary text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-secondary transition-colors">
-                                View Details
-                            </a>
-                        </div>
-                    </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4" data-i18n="programs_heading">Our Programs</h2>
+                <p class="text-center text-[var(--text-light-color)] max-w-3xl mx-auto mb-12" data-i18n="programs_subheading">Dive into our rich cultural offerings.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <a href="yakshagaana.html" class="block bg-[var(--card-bg-color)] rounded-lg shadow-theme p-6 text-center hover:shadow-lg transition duration-300">
+                        <img src="https://placehold.co/400x200/6366f1/ffffff?text=Yakshagaana" alt="Yakshagaana" class="rounded-lg mb-4">
+                        <h3 class="text-xl font-bold mb-2 text-primary" data-i18n="yakshagaana_title">Yakshagaana</h3>
+                        <p class="text-[var(--text-light-color)]" data-i18n="yakshagaana_description">A traditional folk theatre form of Karnataka. Click to learn more.</p>
+                    </a>
+                    <a href="bhajane.html" class="block bg-[var(--card-bg-color)] rounded-lg shadow-theme p-6 text-center hover:shadow-lg transition duration-300">
+                        <img src="https://placehold.co/400x200/6366f1/ffffff?text=Bhajane" alt="Bhajane" class="rounded-lg mb-4">
+                        <h3 class="text-xl font-bold mb-2 text-primary" data-i18n="bhajane_title">Bhajane</h3>
+                        <p class="text-[var(--text-light-color)]" data-i18n="bhajane_description">Devotional songs performed as a group. A soulful tradition.</p>
+                    </a>
+                    <a href="chende.html" class="block bg-[var(--card-bg-color)] rounded-lg shadow-theme p-6 text-center hover:shadow-lg transition duration-300">
+                        <img src="https://placehold.co/400x200/6366f1/ffffff?text=Chende" alt="Chende" class="rounded-lg mb-4">
+                        <h3 class="text-xl font-bold mb-2 text-primary" data-i18n="chende_title">Chende</h3>
+                        <p class="text-[var(--text-light-color)]" data-i18n="chende_description">The rhythmic beats of the Chende drum. An energetic art form.</p>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <section id="upcoming-events" class="py-20 bg-body">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center mb-12 text-primary">Upcoming Events</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-card rounded-xl shadow-theme hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
-                        <img src="https://placehold.co/600x400/a29bfe/ffffff?text=Yakshagaana+Performance" alt="Yakshagaana Performance" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-body mb-2">Yakshagaana Samagama</h3>
-                            <p class="text-light text-sm mb-4">
-                                A grand performance showcasing the art of Yakshagaana.
-                            </p>
-                            <div class="flex items-center text-sm text-light mb-4">
-                                <i class="fas fa-calendar-alt mr-2 text-primary"></i>
-                                <span>October 25, 2025</span>
-                            </div>
-                            <a href="yakshagaana.html" class="inline-block bg-primary text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-secondary transition-colors">
-                                Yakshagaana Details
-                            </a>
-                        </div>
-                    </div>
-                    <div class="bg-card rounded-xl shadow-theme hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
-                        <img src="https://placehold.co/600x400/6c5ce7/ffffff?text=Bhajane+Satsang" alt="Bhajane Satsang" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-body mb-2">Weekly Bhajane Satsang</h3>
-                            <p class="text-light text-sm mb-4">
-                                Join us for soulful devotional singing and community gathering.
-                            </p>
-                            <div class="flex items-center text-sm text-light mb-4">
-                                <i class="fas fa-calendar-alt mr-2 text-primary"></i>
-                                <span>November 10, 2025</span>
-                            </div>
-                            <a href="bhajane.html" class="inline-block bg-primary text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-secondary transition-colors">
-                                Bhajane Details
-                            </a>
-                        </div>
-                    </div>
-                    <div class="bg-card rounded-xl shadow-theme hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
-                        <img src="https://placehold.co/600x400/55efc4/ffffff?text=Chende+Performance" alt="Chende Performance" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-body mb-2">Grand Chende Melam</h3>
-                            <p class="text-light text-sm mb-4">
-                                An energetic performance of traditional Chende drums.
-                            </p>
-                            <div class="flex items-center text-sm text-light mb-4">
-                                <i class="fas fa-calendar-alt mr-2 text-primary"></i>
-                                <span>December 5, 2025</span>
-                            </div>
-                            <a href="chende.html" class="inline-block bg-primary text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-secondary transition-colors">
-                                Chende Details
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="members" class="py-20">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center mb-12 text-primary">Meet Our Members</h2>
-                <p class="text-center text-lg text-light max-w-4xl mx-auto mb-12">
-                    Our vibrant community is made up of dedicated individuals who are passionate about preserving and promoting our cultural heritage.
-                </p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                    <div class="bg-card rounded-xl shadow-theme hover:shadow-2xl transition-shadow duration-300 text-center p-6">
-                        <img src="https://placehold.co/150x150/ff7675/ffffff?text=J.D." alt="Jane Doe" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
-                        <h3 class="text-xl font-bold text-body">Jane Doe</h3>
-                        <p class="text-sm text-light mb-4">Yakshagaana Artist</p>
-                        <div class="flex justify-center space-x-4 text-light">
-                            <a href="#" class="hover-text-primary transition-colors"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="hover-text-primary transition-colors"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="hover-text-primary transition-colors"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                    <div class="bg-card rounded-xl shadow-theme hover:shadow-2xl transition-shadow duration-300 text-center p-6">
-                        <img src="https://placehold.co/150x150/00b894/ffffff?text=J.S." alt="John Smith" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
-                        <h3 class="text-xl font-bold text-body">John Smith</h3>
-                        <p class="text-sm text-light mb-4">Bhajane Lead</p>
-                        <div class="flex justify-center space-x-4 text-light">
-                            <a href="#" class="hover-text-primary transition-colors"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="hover-text-primary transition-colors"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="hover-text-primary transition-colors"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                    <div class="bg-card rounded-xl shadow-theme hover:shadow-2xl transition-shadow duration-300 text-center p-6">
-                        <img src="https://placehold.co/150x150/fdcb6e/ffffff?text=E.W." alt="Emily White" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
-                        <h3 class="text-xl font-bold text-body">Emily White</h3>
-                        <p class="text-sm text-light mb-4">Chende Artist</p>
-                        <div class="flex justify-center space-x-4 text-light">
-                            <a href="#" class="hover-text-primary transition-colors"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="hover-text-primary transition-colors"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="hover-text-primary transition-colors"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                     <div class="bg-card rounded-xl shadow-theme hover:shadow-2xl transition-shadow duration-300 text-center p-6">
-                        <img src="https://placehold.co/150x150/0984e3/ffffff?text=M.K." alt="Michael Kim" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
-                        <h3 class="text-xl font-bold text-body">Michael Kim</h3>
-                        <p class="text-sm text-light mb-4">Multi-Group Member</p>
-                        <div class="flex justify-center space-x-4 text-light">
-                            <a href="#" class="hover-text-primary transition-colors"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="hover-text-primary transition-colors"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="hover-text-primary transition-colors"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="sponsors" class="py-20 bg-body">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-4xl font-bold text-center mb-12 text-primary">Our Permanent Sponsors</h2>
-                <div class="flex flex-wrap justify-center items-center gap-8">
-                    <div class="relative bg-card rounded-lg shadow-theme sponsor-card p-4 w-40 h-24 flex items-center justify-center overflow-hidden">
-                        <img src="https://placehold.co/120x60/ffffff/333333?text=Sponsor+1" alt="Sponsor 1" class="max-h-full max-w-full">
-                        <div class="absolute inset-0 bg-black bg-opacity-75 text-white flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 sponsor-info">
-                            <span class="text-sm font-bold">Sponsor Name 1</span>
-                            <span class="text-xs">Title/Description</span>
-                        </div>
-                    </div>
-                    <div class="relative bg-card rounded-lg shadow-theme sponsor-card p-4 w-40 h-24 flex items-center justify-center overflow-hidden">
-                        <img src="https://placehold.co/120x60/ffffff/333333?text=Sponsor+2" alt="Sponsor 2" class="max-h-full max-w-full">
-                         <div class="absolute inset-0 bg-black bg-opacity-75 text-white flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 sponsor-info">
-                            <span class="text-sm font-bold">Sponsor Name 2</span>
-                            <span class="text-xs">Title/Description</span>
-                        </div>
-                    </div>
-                    <div class="relative bg-card rounded-lg shadow-theme sponsor-card p-4 w-40 h-24 flex items-center justify-center overflow-hidden">
-                        <img src="https://placehold.co/120x60/ffffff/333333?text=Sponsor+3" alt="Sponsor 3" class="max-h-full max-w-full">
-                         <div class="absolute inset-0 bg-black bg-opacity-75 text-white flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 sponsor-info">
-                            <span class="text-sm font-bold">Sponsor Name 3</span>
-                            <span class="text-xs">Title/Description</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </main>
 
-        <section id="contact-us" class="py-20">
-            <div class="container mx-auto px-6 max-w-4xl">
-                <h2 class="text-4xl font-bold text-center mb-12 text-primary">Contact Us</h2>
-                <div class="bg-card rounded-xl shadow-theme p-8">
-                    <form action="#" method="POST" class="space-y-6">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-body">Full Name</label>
-                            <input type="text" id="name" name="name" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-body">Email Address</label>
-                            <input type="email" id="email" name="email" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary">
-                        </div>
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-body">Message</label>
-                            <textarea id="message" name="message" rows="4" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-primary text-white font-bold py-3 px-4 rounded-md hover:bg-secondary transition-colors">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
-                <div class="mt-12 text-center">
-                    <h3 class="text-2xl font-bold text-body mb-4">Our Location</h3>
-                    <p class="text-light">123 Culture Street, Bengaluru, Karnataka, India</p>
-                    <p class="text-light">Email: info@nammayabalaga.org</p>
-                </div>
-            </div>
-        </section>
-        
-    </main>
-
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-6 text-center">
-            <div class="flex flex-col md:flex-row justify-center items-center mb-8 space-y-4 md:space-y-0 md:space-x-12">
-                <a href="index2.html" class="text-gray-300 hover:text-white transition-colors">Home</a>
-                <a href="#features" class="text-gray-300 hover:text-white transition-colors">Features</a>
-                <a href="#about-us" class="text-gray-300 hover:text-white transition-colors">About Us</a>
-                <a href="#news" class="text-gray-300 hover:text-white transition-colors">News</a>
-                <a href="#upcoming-events" class="text-gray-300 hover:text-white transition-colors">Upcoming Events</a>
-                <a href="#members" class="text-gray-300 hover:text-white transition-colors">Members</a>
-                <a href="#sponsors" class="text-gray-300 hover:text-white transition-colors">Sponsors</a>
-                <a href="#contact-us" class="text-gray-300 hover:text-white transition-colors">Contact Us</a>
-            </div>
-            <div class="flex justify-center space-x-6 text-2xl mb-8">
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-youtube"></i></a>
-            </div>
-            <p class="text-sm text-gray-500">&copy; 2025 Nammaya Balaga. All rights reserved.</p>
+    <footer class="bg-[var(--card-bg-color)] py-8">
+        <div class="container mx-auto px-6 text-center text-[var(--text-light-color)]">
+            <p>&copy; <span data-i18n="copyright_year">2025</span> <span data-i18n="copyright_text">Nammaya Balaga. All rights reserved.</span></p>
         </div>
     </footer>
 
+    <script src="i18n2.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuButton = document.getElementById('menu-button');
-            const navMenu = document.getElementById('nav-menu');
-            const programsDropdownBtn = document.getElementById('programs-dropdown-btn');
-            const programsDropdownMenu = document.getElementById('programs-dropdown-menu');
-            const themeOptions = document.querySelectorAll('.theme-option');
-            const html = document.querySelector('html');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme Toggle functionality
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
 
-            // Theme Switching Logic
-            const applyTheme = (theme) => {
-                html.className = '';
-                if (theme !== 'default') {
-                    html.classList.add(`theme-${theme}`);
+            function setTheme(theme) {
+                document.body.classList.remove('theme-dark');
+                if (theme === 'dark') {
+                    document.body.classList.add('theme-dark');
                 }
-                localStorage.setItem('selectedTheme', theme);
-            };
+                localStorage.setItem('theme', theme);
+            }
 
-            const savedTheme = localStorage.getItem('selectedTheme') || 'default';
-            applyTheme(savedTheme);
+            function toggleTheme() {
+                const currentTheme = localStorage.getItem('theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                setTheme(newTheme);
+            }
 
-            themeOptions.forEach(button => {
-                button.addEventListener('click', () => {
-                    const theme = button.dataset.theme;
-                    applyTheme(theme);
+            themeToggleBtn.addEventListener('click', toggleTheme);
+            themeToggleMobileBtn.addEventListener('click', toggleTheme);
+
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+
+            // Language Selector functionality
+            const langSelector = document.getElementById('lang-selector');
+            const langSelectorMobile = document.getElementById('lang-selector-mobile');
+
+            function setLang(lang) {
+                localStorage.setItem('lang', lang);
+                translatePage(lang);
+            }
+
+            function handleLangChange(event) {
+                const newLang = event.target.value;
+                setLang(newLang);
+                if (event.target.id === 'lang-selector') {
+                    langSelectorMobile.value = newLang;
+                } else {
+                    langSelector.value = newLang;
+                }
+            }
+
+            langSelector.addEventListener('change', handleLangChange);
+            langSelectorMobile.addEventListener('change', handleLangChange);
+
+            const savedLang = localStorage.getItem('lang') || 'en';
+            langSelector.value = savedLang;
+            langSelectorMobile.value = savedLang;
+            translatePage(savedLang);
+
+            // Mobile Menu Toggle
+            const navToggle = document.getElementById('nav-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            navToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Program Dropdown functionality
+            const programsDropdownBtn = document.getElementById('programsDropdownBtn');
+            const programsDropdownMenu = document.getElementById('programsDropdownMenu');
+            const mobileProgramsDropdownBtn = document.getElementById('mobileProgramsDropdownBtn');
+            const mobileProgramsDropdownMenu = document.getElementById('mobileProgramsDropdownMenu');
+
+            function toggleDropdown(dropdownMenu) {
+                dropdownMenu.classList.toggle('hidden');
+            }
+
+            if (programsDropdownBtn) {
+                programsDropdownBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    toggleDropdown(programsDropdownMenu);
                 });
-            });
-			
-			
-			// Add these lines to your existing JavaScript
-			const themeSwitcherBtn = document.getElementById('theme-switcher-btn');
-			const themeSwitcherMenu = document.getElementById('theme-switcher-menu');
+            }
+            if (mobileProgramsDropdownBtn) {
+                mobileProgramsDropdownBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    toggleDropdown(mobileProgramsDropdownMenu);
+                });
+            }
 
-			// Toggle theme switcher dropdown on click
-			themeSwitcherBtn.addEventListener('click', (e) => {
-				e.preventDefault();
-				themeSwitcherMenu.classList.toggle('hidden');
-			});
-
-			// Close dropdowns when clicking outside
-			document.addEventListener('click', (e) => {
-				if (!themeSwitcherBtn.parentElement.contains(e.target)) {
-					themeSwitcherMenu.classList.add('hidden');
-				}
-				if (!programsDropdownBtn.parentElement.contains(e.target)) {
-					programsDropdownMenu.classList.add('hidden');
-				}
-			});
-
-            // Toggle mobile menu
-            menuButton.addEventListener('click', () => {
-                navMenu.classList.toggle('hidden');
-                navMenu.classList.toggle('absolute');
-                navMenu.classList.toggle('top-full');
-                navMenu.classList.toggle('left-0');
-                navMenu.classList.toggle('right-0');
-                navMenu.classList.toggle('bg-card');
-                navMenu.classList.toggle('shadow-md');
-                navMenu.classList.toggle('p-4');
-                navMenu.classList.toggle('flex');
-            });
-
-            // Toggle programs dropdown on click
-            programsDropdownBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                programsDropdownMenu.classList.toggle('hidden');
-            });
-            
             // Close dropdowns when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!programsDropdownBtn.parentElement.contains(e.target)) {
+            window.addEventListener('click', function(event) {
+                if (programsDropdownBtn && !programsDropdownBtn.contains(event.target) && programsDropdownMenu) {
                     programsDropdownMenu.classList.add('hidden');
                 }
-            });
-
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('#nav-menu a').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    if (this.getAttribute('href').startsWith('#')) {
-                        e.preventDefault();
-                        if (!navMenu.classList.contains('hidden')) {
-                            // Hide menu on click for mobile
-                            navMenu.classList.add('hidden');
-                            navMenu.classList.remove('absolute', 'top-full', 'left-0', 'right-0', 'bg-card', 'shadow-md', 'p-4', 'flex');
-                        }
-                        const targetId = this.getAttribute('href');
-                        document.querySelector(targetId).scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
-                });
+                if (mobileProgramsDropdownBtn && !mobileProgramsDropdownBtn.contains(event.target) && mobileProgramsDropdownMenu) {
+                    mobileProgramsDropdownMenu.classList.add('hidden');
+                }
             });
         });
     </script>
